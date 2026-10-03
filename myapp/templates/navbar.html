@@ -1,0 +1,156 @@
+<style>
+    .navbar {
+        max-width: 1100px;
+        margin: 25px auto 0;
+        padding: 0 20px;
+    }
+
+    .navbar-inner {
+        background: white;
+        padding: 14px 18px;
+        border-radius: 18px;
+        box-shadow: 0 8px 25px rgba(30, 35, 50, 0.06);
+
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .nav-button {
+        display: inline-block;
+        padding: 10px 15px;
+        border-radius: 11px;
+
+        background: #f7f8fc;
+        color: #2d3142;
+
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: bold;
+
+        transition: 0.2s;
+    }
+
+    .nav-button:hover {
+        transform: translateY(-2px);
+        background: #eef0f5;
+    }
+
+    .nav-profile {
+        background: #2d3142;
+        color: white;
+    }
+
+    .nav-profile:hover {
+        background: #2d3142;
+        opacity: 0.9;
+    }
+
+    .nav-logout {
+        margin-left: auto;
+    }
+
+    .nav-logout button {
+        border: none;
+        padding: 10px 15px;
+        border-radius: 11px;
+
+        background: #fff1f1;
+        color: #c94b4b;
+
+        font-size: 14px;
+        font-weight: bold;
+
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .nav-logout button:hover {
+        transform: translateY(-2px);
+        background: #ffe3e3;
+    }
+
+    @media (max-width: 600px) {
+        .navbar {
+            margin-top: 15px;
+        }
+
+        .navbar-inner {
+            padding: 12px;
+        }
+
+        .nav-logout {
+            margin-left: 0;
+        }
+    }
+</style>
+
+<div class="navbar">
+
+    <div class="navbar-inner">
+
+        <!-- Доступно всем -->
+        <a href="{% url 'home' %}" class="nav-button">
+            🏠 Marketplace
+        </a>
+
+        <a href="{% url 'products' %}" class="nav-button">
+            Products
+        </a>
+
+
+        {% if request.user.is_authenticated %}
+
+            <!-- Только для авторизованных -->
+
+            <a href="{% url 'cr_profile' %}" class="nav-button nav-profile">
+                👤 My Profile
+            </a>
+
+            <a href="{% url 'cart' %}" class="nav-button">
+                🛒 Cart
+            </a>
+
+            <a href="{% url 'my_favorites' %}" class="nav-button">
+                ❤️ Favorites
+            </a>
+
+            <a href="{% url 'orders' %}" class="nav-button">
+                📦 Orders
+            </a>
+
+            <a href="{% url 'ai' %}" class="nav-button">
+                🤖 AI Assistant
+            </a>
+
+            <form method="post"
+                  action="{% url 'logout' %}"
+                  class="nav-logout">
+
+                {% csrf_token %}
+
+                <button type="submit">
+                    Logout
+                </button>
+
+            </form>
+
+        {% else %}
+
+            <!-- Только для гостей -->
+
+            <a href="{% url 'login' %}" class="nav-button">
+                Login
+            </a>
+
+            <a href="{% url 'register' %}" class="nav-button">
+                Register
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</div>
+

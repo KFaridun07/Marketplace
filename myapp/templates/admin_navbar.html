@@ -1,0 +1,139 @@
+
+<style>
+    .admin-navbar {
+        max-width: 1100px;
+        margin: 25px auto 0;
+        padding: 0 20px;
+    }
+
+    .admin-navbar-inner {
+        background: white;
+        padding: 14px 18px;
+        border-radius: 18px;
+        box-shadow: 0 8px 25px rgba(30, 35, 50, 0.06);
+
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .admin-nav-button {
+        display: inline-block;
+        padding: 10px 15px;
+        border-radius: 11px;
+
+        background: #f7f8fc;
+        color: #2d3142;
+
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: bold;
+
+        transition: 0.2s;
+    }
+
+    .admin-nav-button:hover {
+        transform: translateY(-2px);
+        background: #eef0f5;
+    }
+
+    .admin-dashboard {
+        background: #2d3142;
+        color: white;
+    }
+
+    .admin-dashboard:hover {
+        background: #2d3142;
+        opacity: 0.9;
+    }
+
+    .admin-logout {
+        margin-left: auto;
+    }
+
+    .admin-logout button {
+        border: none;
+        padding: 10px 15px;
+        border-radius: 11px;
+
+        background: #fff1f1;
+        color: #c94b4b;
+
+        font-size: 14px;
+        font-weight: bold;
+
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .admin-logout button:hover {
+        transform: translateY(-2px);
+        background: #ffe3e3;
+    }
+
+    @media (max-width: 600px) {
+        .admin-navbar {
+            margin-top: 15px;
+        }
+
+        .admin-navbar-inner {
+            padding: 12px;
+        }
+
+        .admin-logout {
+            margin-left: 0;
+        }
+    }
+</style>
+
+<div class="admin-navbar">
+
+    <div class="admin-navbar-inner">
+
+        <a href="{% url 'admin_dashboard' %}"
+           class="admin-nav-button admin-dashboard">
+            ⚙️ Dashboard
+        </a>
+
+        <a href="{% url 'admin_users' %}"
+           class="admin-nav-button">
+            👥 Users
+        </a>
+
+        <a href="{% url 'admin_categories' %}"
+           class="admin-nav-button">
+            📂 Categories
+        </a>
+
+        <a href="{% url 'admin_products' %}"
+           class="admin-nav-button">
+            🛍 Products
+        </a>
+
+        <a href="{% url 'admin_orders' %}"
+           class="admin-nav-button">
+            📦 Orders
+        </a>
+
+        <a href="{% url 'home' %}"
+           class="admin-nav-button">
+            🏠 Marketplace
+        </a>
+
+        <form method="post"
+              action="{% url 'logout' %}"
+              class="admin-logout">
+
+            {% csrf_token %}
+
+            <button type="submit">
+                Logout
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+

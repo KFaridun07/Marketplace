@@ -19,7 +19,13 @@ class RegisterView(CreateView):
 
 class Login(LoginView):
     template_name = 'login.html'
-    next_page = 'cr_profile'
+
+    def get_success_url(self):
+        if self.request.user.is_superuser:
+            return reverse_lazy('admin_dashboard')
+        else:
+            return reverse_lazy('cr_profile')
+
 
 class Logout(LogoutView):
     next_page = 'login'
@@ -30,10 +36,15 @@ class CreateProfile(LoginRequiredMixin,CreateView):
     template_name = 'create.profile.html'
 
     def dispatch(self, request, *args, **kwargs):
-        if Profile.objects.filter(user = self.request.user).exists():
-            profile = Profile.objects.get(user = self.request.user)
-            return redirect('myprofile',pk = profile.pk)
+        if not request.user.is_authenticated:
+            return redirect('login')
+
+        if Profile.objects.filter(user=request.user).exists():
+            profile = Profile.objects.get(user=request.user)
+            return redirect('myprofile', pk=profile.pk)
+
         return super().dispatch(request, *args, **kwargs)
+
 
     def form_valid(self, form):
         form.instance.user = self.request.user
