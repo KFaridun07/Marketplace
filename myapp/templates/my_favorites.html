@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   <h1>My Favorites</h1>
+
+{% for product in products %}
+
+<h2>{{ product.name }}</h2>
+
+<p>{{ product.description }}</p>
+
+<p>Price: {{ product.price }}</p>
+
+<form method="post" action="{% url 'favorite_remove' product.pk %}">
+    {% csrf_token %}
+    <button type="submit">Remove from Favorites</button>
+</form>
+
+{% for image in product.images.all %}
+    <img src="{{ image.image.url }}" width="200">
+{% endfor %}
+
+<br>
+
+<a href="{% url 'product' product.pk %}">
+    Open product
+</a>
+
+{% if product.owner != request.user %}
+    <form method="post" action="{% url 'add_cart' product.pk %}">
+        {% csrf_token %}
+        <button type="submit">Add to Cart</button>
+    </form>
+{% endif %}
+
+<hr>
+
+{% empty %}
+
+<p>You don't have any favorite products yet.</p>
+
+{% endfor %}
+
+<br>
+
+<a href="{% url 'myprofile' request.user.profile.pk %}">
+    <button type="button">Back to Profile</button>
+</a>
+
+</body>
+</html>

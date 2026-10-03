@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f6f7f9;
+            color: #222;
+
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 420px;
+
+            background: white;
+
+            padding: 35px;
+
+            border-radius: 20px;
+
+            border: 1px solid #e6e6e6;
+
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 25px;
+            font-weight: bold;
+
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #888;
+            font-size: 14px;
+
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 28px;
+
+            margin-bottom: 25px;
+        }
+
+        form p {
+            margin-bottom: 18px;
+        }
+
+        form label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-size: 14px;
+            color: #555;
+        }
+
+        form input {
+            width: 100%;
+
+            padding: 12px 14px;
+
+            border: 1px solid #ddd;
+            border-radius: 10px;
+
+            outline: none;
+
+            font-size: 14px;
+        }
+
+        form input:focus {
+            border-color: #999;
+        }
+
+        .login-button {
+            width: 100%;
+
+            border: none;
+
+            background: #222;
+            color: white;
+
+            padding: 13px;
+
+            border-radius: 10px;
+
+            font-size: 15px;
+
+            cursor: pointer;
+
+            margin-top: 5px;
+        }
+
+        .login-button:hover {
+            background: #444;
+        }
+
+        .bottom {
+            text-align: center;
+
+            margin-top: 25px;
+
+            color: #888;
+
+            font-size: 14px;
+        }
+
+        .bottom a {
+            color: #222;
+
+            text-decoration: none;
+
+            font-weight: 600;
+        }
+
+        .bottom a:hover {
+            text-decoration: underline;
+        }
+
+        .home-button {
+            display: block;
+
+            text-align: center;
+
+            margin-top: 15px;
+
+            padding: 11px;
+
+            border-radius: 10px;
+
+            background: #f1f2f4;
+
+            color: #333;
+
+            text-decoration: none;
+
+            font-size: 14px;
+        }
+
+        .home-button:hover {
+            background: #e5e6e8;
+        }
+
+        @media (max-width: 500px) {
+
+            .login-card {
+                margin: 20px;
+                padding: 28px 22px;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <div class="login-card">
+
+        <div class="logo">
+            Marketplace
+        </div>
+
+        <div class="subtitle">
+            Welcome back
+        </div>
+
+        <h1>
+            Login
+        </h1>
+
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button
+                type="submit"
+                class="login-button"
+            >
+                Login
+            </button>
+
+        </form>
+
+
+        <div class="bottom">
+
+            Don't have an account?
+
+            <a href="{% url 'register' %}">
+                Register
+            </a>
+
+        </div>
+
+
+        <a
+            href="{% url 'home' %}"
+            class="home-button"
+        >
+            ← Back to Marketplace
+        </a>
+
+    </div>
+
+</body>
+</html>

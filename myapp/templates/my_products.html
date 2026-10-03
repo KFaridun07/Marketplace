@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>My Products</h1>
+
+{% for product in products %}
+
+    <h2>{{ product.name }}</h2>
+
+    <p>Price: {{ product.price }}</p>
+
+    {% for image in product.images.all %}
+        <img src="{{ image.image.url }}" width="200">
+    {% endfor %}
+
+    <br>
+
+    <a href="{% url 'product' product.pk %}">
+        Open product
+    </a>
+
+    <hr>
+
+{% empty %}
+
+    <p>You don't have any products yet.</p>
+
+{% endfor %}
+
+<a href="{% url 'cr_prod' %}"><button>Add products</button></a>
+</body>
+</html>

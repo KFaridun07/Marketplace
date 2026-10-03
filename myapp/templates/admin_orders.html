@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Admin Orders</h1>
+
+{% for order in orders %}
+
+<p>
+    Order: {{ order.pk }}
+    | Owner: {{ order.owner.username }}
+    | Total: {{ order.total_price }}
+    | Date: {{ order.cr_at }}
+
+    <a href="{% url 'admin_order_detail' order.pk %}">
+        View Detail
+    </a>
+</p>
+
+{% endfor %}
+</body>
+</html>

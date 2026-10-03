@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ category.title }}</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f6f7f9;
+            color: #222;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 45px auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .header h1 {
+            margin: 0 0 8px;
+            font-size: 34px;
+        }
+
+        .header p {
+            margin: 0;
+            color: #888;
+            font-size: 14px;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .product-card {
+            background: white;
+            border: 1px solid #e8e8e8;
+            border-radius: 18px;
+            padding: 22px;
+
+            transition: 0.2s;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.07);
+        }
+
+        .product-card h2 {
+            margin: 0 0 12px;
+            font-size: 21px;
+        }
+
+        .description {
+            color: #777;
+            font-size: 14px;
+            line-height: 1.6;
+
+            flex: 1;
+
+            margin-bottom: 18px;
+        }
+
+        .price {
+            font-size: 19px;
+            font-weight: 600;
+
+            margin-bottom: 18px;
+        }
+
+        .open-button {
+            display: block;
+
+            width: 100%;
+
+            padding: 12px;
+
+            background: #222;
+            color: white;
+
+            border-radius: 10px;
+
+            text-align: center;
+            text-decoration: none;
+
+            font-size: 14px;
+        }
+
+        .open-button:hover {
+            background: #444;
+        }
+
+        .empty {
+            background: white;
+            border: 1px solid #e8e8e8;
+            border-radius: 18px;
+
+            padding: 50px 20px;
+
+            text-align: center;
+
+            color: #888;
+        }
+
+        .back-button {
+            display: block;
+
+            width: 160px;
+
+            margin: 30px auto 0;
+
+            padding: 12px;
+
+            background: white;
+            color: #333;
+
+            border: 1px solid #ddd;
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            font-size: 14px;
+        }
+
+        .back-button:hover {
+            background: #f0f0f0;
+        }
+
+        @media (max-width: 800px) {
+
+            .products {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 550px) {
+
+            .products {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <h1>
+            {{ category.title }}
+        </h1>
+
+        <p>
+            Products in this category
+        </p>
+
+    </div>
+
+
+    <div class="products">
+
+        {% for product in products %}
+
+            <div class="product-card">
+
+                <h2>
+                    {{ product.name }}
+                </h2>
+
+                <p class="description">
+                    {{ product.description }}
+                </p>
+
+                <p class="price">
+                    ${{ product.price }}
+                </p>
+
+                <a
+                    href="{% url 'product' product.pk %}"
+                    class="open-button"
+                >
+                    Open Product
+                </a>
+
+            </div>
+
+        {% empty %}
+
+            <div class="empty">
+
+                <h3>
+                    No products yet
+                </h3>
+
+                <p>
+                    В этой категории пока нет товаров.
+                </p>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    <button
+        type="button"
+        class="back-button"
+        onclick="history.back()"
+    >
+        ← Back
+    </button>
+
+</div>
+
+</body>
+</html>

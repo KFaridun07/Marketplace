@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Admin Categories</h1>
+{% for category in categories %}
+
+<p>
+    {{ category.title }}
+
+    <a href="{% url 'admin_category_edit' category.pk %}">
+        Edit
+    </a>
+
+    <form method="post"
+          action="{% url 'admin_category_delete' category.pk %}"
+          style="display:inline;">
+
+        {% csrf_token %}
+
+        <button type="submit">Delete</button>
+
+    </form>
+</p>
+
+{% endfor %}
+
+<a href="{% url 'admin_category_create' %}">Add Category</a>
+</body>
+</html>

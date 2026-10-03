@@ -1,0 +1,255 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>All Products</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f6f7f9;
+            color: #222;
+        }
+
+        .container {
+            max-width: 1150px;
+            margin: 45px auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .header h1 {
+            margin: 0 0 8px;
+            font-size: 34px;
+        }
+
+        .header p {
+            margin: 0;
+            color: #888;
+            font-size: 14px;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .product-card {
+            background: white;
+            border: 1px solid #e7e7e7;
+            border-radius: 18px;
+            padding: 22px;
+
+            text-decoration: none;
+            color: #222;
+
+            transition: 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .product-icon {
+            width: 55px;
+            height: 55px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #f1f2f4;
+            border-radius: 14px;
+
+            font-size: 25px;
+
+            margin-bottom: 18px;
+        }
+
+        .product-name {
+            font-size: 21px;
+            font-weight: 600;
+
+            margin-bottom: 10px;
+        }
+
+        .category {
+            display: inline-block;
+
+            padding: 6px 10px;
+
+            background: #f3f3f3;
+            color: #777;
+
+            border-radius: 8px;
+
+            font-size: 12px;
+
+            margin-bottom: 18px;
+        }
+
+        .product-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-top: 10px;
+        }
+
+        .price {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .open-button {
+            padding: 9px 13px;
+
+            background: #222;
+            color: white;
+
+            border-radius: 9px;
+
+            font-size: 12px;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+
+            margin-top: 35px;
+        }
+
+        .nav-button {
+            padding: 12px 22px;
+
+            background: white;
+            color: #333;
+
+            border: 1px solid #ddd;
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            font-size: 14px;
+        }
+
+        .nav-button:hover {
+            background: #f0f0f0;
+        }
+
+        @media (max-width: 800px) {
+
+            .products {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 550px) {
+
+            .products {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <h1>
+            All Products
+        </h1>
+
+        <p>
+            Discover products from our marketplace
+        </p>
+
+    </div>
+
+
+    <div class="products">
+
+        {% for product in products %}
+
+            <a
+                href="{% url 'product' product.pk %}"
+                class="product-card"
+            >
+
+                <div class="product-icon">
+                    🛍️
+                </div>
+
+                <div class="product-name">
+                    {{ product.name }}
+                </div>
+
+                <div class="category">
+                    {{ product.category }}
+                </div>
+
+                <div class="product-bottom">
+
+                    <div class="price">
+                        ${{ product.price }}
+                    </div>
+
+                    <div class="open-button">
+                        Open
+                    </div>
+
+                </div>
+
+            </a>
+
+        {% endfor %}
+
+    </div>
+
+
+    <div class="navigation">
+
+        <a
+            href="{% url 'home' %}"
+            class="nav-button"
+        >
+            ← Marketplace
+        </a>
+
+        <a
+            href="{% url 'cats' %}"
+            class="nav-button"
+        >
+            Categories
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>
+```

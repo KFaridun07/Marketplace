@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Assistant</title>
+</head>
+<body>
+
+    <h1>AI Assistant</h1>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <input
+            type="text"
+            name="question"
+            placeholder="Ask something..."
+            required
+        >
+
+        <button type="submit">Ask AI</button>
+    </form>
+
+    {% if answer %}
+        <h2>AI Answer:</h2>
+
+        <p>{{ answer }}</p>
+    {% endif %}
+
+</body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Profile</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f6f7f9;
+            color: #222;
+
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .edit-card {
+            width: 100%;
+            max-width: 460px;
+
+            background: white;
+
+            padding: 35px;
+
+            border-radius: 20px;
+
+            border: 1px solid #e6e6e6;
+
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            text-align: center;
+
+            font-size: 25px;
+            font-weight: bold;
+
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+
+            color: #888;
+
+            font-size: 14px;
+
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            text-align: center;
+
+            font-size: 28px;
+
+            margin-bottom: 25px;
+        }
+
+        form p {
+            margin-bottom: 18px;
+        }
+
+        form label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-size: 14px;
+
+            color: #555;
+        }
+
+        form input {
+            width: 100%;
+
+            padding: 12px 14px;
+
+            border: 1px solid #ddd;
+
+            border-radius: 10px;
+
+            outline: none;
+
+            font-size: 14px;
+        }
+
+        form input:focus {
+            border-color: #999;
+        }
+
+        form input[type="file"] {
+            padding: 9px;
+            background: #fafafa;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+
+            margin-top: 20px;
+        }
+
+        .save-button,
+        .cancel-button {
+            flex: 1;
+
+            text-align: center;
+
+            padding: 12px;
+
+            border-radius: 10px;
+
+            font-size: 14px;
+
+            cursor: pointer;
+
+            text-decoration: none;
+        }
+
+        .save-button {
+            border: none;
+
+            background: #222;
+
+            color: white;
+        }
+
+        .save-button:hover {
+            background: #444;
+        }
+
+        .cancel-button {
+            background: #f1f2f4;
+
+            color: #333;
+        }
+
+        .cancel-button:hover {
+            background: #e5e6e8;
+        }
+
+        @media (max-width: 500px) {
+
+            .edit-card {
+                margin: 20px;
+
+                padding: 28px 22px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <div class="edit-card">
+
+        <div class="logo">
+            Marketplace
+        </div>
+
+        <div class="subtitle">
+            Update your personal information
+        </div>
+
+        <h1>
+            Edit Profile
+        </h1>
+
+
+        <form
+            method="post"
+            enctype="multipart/form-data"
+        >
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+
+            <div class="buttons">
+
+                <button
+                    type="submit"
+                    class="save-button"
+                >
+                    Save Changes
+                </button>
+
+
+                <a
+                    href="{% url 'myprofile' object.pk %}"
+                    class="cancel-button"
+                >
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</body>
+</html>

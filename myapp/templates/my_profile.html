@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f6f7f9;
+            color: #222;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .profile-card {
+            background: white;
+            border: 1px solid #e6e6e6;
+            border-radius: 22px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+        }
+
+        .profile-header {
+            text-align: center;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #f1f2f4;
+        }
+
+        .no-avatar {
+            width: 150px;
+            height: 150px;
+            margin: auto;
+
+            border-radius: 50%;
+
+            background: #f1f2f4;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: #999;
+        }
+
+        .fullname {
+            margin-top: 20px;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            color: #888;
+            margin-top: 7px;
+            font-size: 14px;
+        }
+
+        .actions-title {
+            font-size: 20px;
+            margin: 30px 0 18px;
+        }
+
+        .actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .button {
+            display: block;
+            text-align: center;
+
+            text-decoration: none;
+
+            background: #f1f2f4;
+            color: #333;
+
+            padding: 13px;
+
+            border-radius: 10px;
+
+            font-size: 14px;
+
+            transition: 0.2s;
+        }
+
+        .button:hover {
+            background: #e3e4e6;
+        }
+
+        .primary {
+            background: #222;
+            color: white;
+        }
+
+        .primary:hover {
+            background: #444;
+        }
+
+        .logout {
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .logout button {
+            border: none;
+
+            background: #222;
+            color: white;
+
+            padding: 12px 25px;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            font-size: 14px;
+        }
+
+        .logout button:hover {
+            background: #444;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+
+            margin-top: 25px;
+
+            color: #666;
+            text-decoration: none;
+
+            font-size: 14px;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+
+            .container {
+                margin: 25px auto;
+            }
+
+            .profile-card {
+                padding: 25px 20px;
+            }
+
+            .actions {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <div class="profile-card">
+
+
+        <!-- PROFILE -->
+
+        <div class="profile-header">
+
+            {% if profile.avatar %}
+
+                <img
+                    src="{{ profile.avatar.url }}"
+                    class="avatar"
+                    alt="Profile avatar"
+                >
+
+            {% else %}
+
+                <div class="no-avatar">
+                    No avatar
+                </div>
+
+            {% endif %}
+
+
+            <div class="fullname">
+                {{ profile.fullname }}
+            </div>
+
+            <div class="subtitle">
+                My Marketplace Profile
+            </div>
+
+        </div>
+
+
+
+        <!-- ACTIONS -->
+
+        <h2 class="actions-title">
+            My Marketplace
+        </h2>
+
+
+        <div class="actions">
+
+            <a
+                href="{% url 'cart' %}"
+                class="button"
+            >
+                🛒 Cart
+            </a>
+
+
+            <a
+                href="{% url 'orders' %}"
+                class="button"
+            >
+                📦 My Orders
+            </a>
+
+
+            <a
+                href="{% url 'cr_prod' %}"
+                class="button primary"
+            >
+                + Add Product
+            </a>
+
+
+            <a
+                href="{% url 'my_products' %}"
+                class="button"
+            >
+                My Products
+            </a>
+
+
+            <a
+                href="{% url 'my_favorites' %}"
+                class="button"
+            >
+                ♥ My Favorites
+            </a>
+
+
+            <a
+                href="{% url 'ai' %}"
+                class="button"
+            >
+                ✨ AI Assistant
+            </a>
+
+
+            <a
+                href="{% url 'profile_edit' profile.pk %}"
+                class="button"
+            >
+                ⚙ Edit Profile
+            </a>
+
+        </div>
+
+
+
+        <!-- LOGOUT -->
+
+        <div class="logout">
+
+            <form
+                method="post"
+                action="{% url 'logout' %}"
+            >
+
+                {% csrf_token %}
+
+                <button type="submit">
+                    Logout
+                </button>
+
+            </form>
+
+        </div>
+
+
+
+        <!-- BACK -->
+
+        <a
+            href="{% url 'home' %}"
+            class="back"
+        >
+            ← Back to Marketplace
+        </a>
+
+
+    </div>
+
+</div>
+
+</body>
+</html>

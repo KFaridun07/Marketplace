@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Categories</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f6f7f9;
+            color: #222;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .header h1 {
+            font-size: 34px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .category-card {
+            background: white;
+            border: 1px solid #e6e6e6;
+            border-radius: 16px;
+            padding: 30px 20px;
+
+            text-align: center;
+            text-decoration: none;
+            color: #222;
+
+            transition: 0.2s;
+        }
+
+        .category-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
+        }
+
+        .category-icon {
+            font-size: 30px;
+            margin-bottom: 12px;
+        }
+
+        .category-title {
+            font-size: 17px;
+            font-weight: 600;
+        }
+
+        .create-button {
+            display: block;
+
+            width: 220px;
+
+            margin: 30px auto 0;
+
+            padding: 13px;
+
+            text-align: center;
+
+            background: #222;
+            color: white;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            font-size: 14px;
+        }
+
+        .create-button:hover {
+            background: #444;
+        }
+
+        .back {
+            display: block;
+
+            text-align: center;
+
+            margin-top: 20px;
+
+            color: #666;
+
+            text-decoration: none;
+
+            font-size: 14px;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 750px) {
+
+            .categories {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 500px) {
+
+            .categories {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <div class="header">
+
+        <h1>
+            All Categories
+        </h1>
+
+        <p>
+            Browse products by category
+        </p>
+
+    </div>
+
+
+    <div class="categories">
+
+        {% for cat in cats %}
+
+            <a
+                href="{% url 'category_products' cat.pk %}"
+                class="category-card"
+            >
+
+                <div class="category-icon">
+                    🛍️
+                </div>
+
+                <div class="category-title">
+                    {{ cat.title }}
+                </div>
+
+            </a>
+
+        {% endfor %}
+
+    </div>
+
+
+    <a
+        href="{% url 'cr_cat' %}"
+        class="create-button"
+    >
+        + Create Category
+    </a>
+
+
+    <a
+        href="{% url 'home' %}"
+        class="back"
+    >
+        ← Back to Marketplace
+    </a>
+
+
+</div>
+
+</body>
+</html>

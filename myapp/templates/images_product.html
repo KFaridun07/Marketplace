@@ -1,0 +1,202 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Product Images</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f6f7f9;
+            color: #222;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 45px auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .header h1 {
+            margin: 0 0 8px;
+            font-size: 32px;
+        }
+
+        .header p {
+            margin: 0;
+            color: #888;
+            font-size: 14px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .image-card {
+            background: white;
+            border: 1px solid #e7e7e7;
+            border-radius: 18px;
+            padding: 12px;
+
+            overflow: hidden;
+
+            transition: 0.2s;
+        }
+
+        .image-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 220px;
+
+            display: block;
+
+            object-fit: cover;
+
+            border-radius: 12px;
+        }
+
+        .empty {
+            background: white;
+            border: 1px solid #e7e7e7;
+            border-radius: 18px;
+
+            padding: 50px 20px;
+
+            text-align: center;
+            color: #888;
+        }
+
+        .back-button {
+            display: block;
+
+            width: 180px;
+
+            margin: 30px auto 0;
+
+            padding: 12px;
+
+            background: white;
+            color: #333;
+
+            border: 1px solid #ddd;
+            border-radius: 10px;
+
+            text-align: center;
+            text-decoration: none;
+
+            font-size: 14px;
+        }
+
+        .back-button:hover {
+            background: #f0f0f0;
+        }
+
+        @media (max-width: 900px) {
+
+            .gallery {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+        }
+
+        @media (max-width: 650px) {
+
+            .gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 450px) {
+
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <h1>
+            Product Images
+        </h1>
+
+        <p>
+            All photos of this product
+        </p>
+
+    </div>
+
+
+    <div class="gallery">
+
+        {% for image in images %}
+
+            <div class="image-card">
+
+                <img
+                    src="{{ image.image.url }}"
+                    alt="Product image"
+                >
+
+            </div>
+
+        {% empty %}
+
+            <div class="empty">
+
+                <h3>
+                    No images
+                </h3>
+
+                <p>
+                    This product doesn't have any images yet.
+                </p>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    <a
+        href="{% url 'products' %}"
+        class="back-button"
+    >
+        ← Back to Products
+    </a>
+
+</div>
+
+</body>
+</html>
+```

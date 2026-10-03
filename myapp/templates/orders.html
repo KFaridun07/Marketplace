@@ -1,0 +1,264 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Orders</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f6f7f9;
+            color: #222;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .header h1 {
+            margin: 0 0 8px;
+            font-size: 32px;
+        }
+
+        .header p {
+            margin: 0;
+            color: #888;
+            font-size: 14px;
+        }
+
+        .orders {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .order-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            background: white;
+
+            border: 1px solid #e7e7e7;
+            border-radius: 16px;
+
+            padding: 22px;
+
+            transition: 0.2s;
+        }
+
+        .order-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+        }
+
+        .order-info h3 {
+            margin: 0 0 8px;
+            font-size: 19px;
+        }
+
+        .order-date {
+            margin: 0;
+            color: #888;
+            font-size: 13px;
+        }
+
+        .order-price {
+            margin-top: 8px;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .open-button {
+            padding: 11px 18px;
+
+            background: #222;
+            color: white;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            font-size: 13px;
+        }
+
+        .open-button:hover {
+            background: #444;
+        }
+
+        .empty {
+            background: white;
+
+            border: 1px solid #e7e7e7;
+            border-radius: 18px;
+
+            padding: 55px 20px;
+
+            text-align: center;
+        }
+
+        .empty h2 {
+            margin-bottom: 8px;
+        }
+
+        .empty p {
+            color: #888;
+            margin: 0;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+
+            margin-top: 30px;
+        }
+
+        .nav-button {
+            padding: 11px 20px;
+
+            background: white;
+            color: #333;
+
+            border: 1px solid #ddd;
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            font-size: 13px;
+        }
+
+        .nav-button:hover {
+            background: #f0f0f0;
+        }
+
+        @media (max-width: 600px) {
+
+            .order-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 18px;
+            }
+
+            .open-button {
+                display: block;
+                width: 100%;
+                text-align: center;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <div class="header">
+
+        <h1>
+            My Orders
+        </h1>
+
+        <p>
+            View your previous orders
+        </p>
+
+    </div>
+
+
+    <div class="orders">
+
+        {% for order in orders %}
+
+            <div class="order-card">
+
+                <div class="order-info">
+
+                    <h3>
+                        Order #{{ order.pk }}
+                    </h3>
+
+                    <p class="order-date">
+                        {{ order.cr_at }}
+                    </p>
+
+                    <div class="order-price">
+                        Total: {{ order.total_price }}
+                    </div>
+
+                </div>
+
+
+                <a
+                    href="{% url 'order_detail' order.pk %}"
+                    class="open-button"
+                >
+                    Open Order
+                </a>
+
+            </div>
+
+        {% empty %}
+
+            <div class="empty">
+
+                <h2>
+                    No Orders Yet
+                </h2>
+
+                <p>
+                    You don't have any orders yet.
+                </p>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    <div class="navigation">
+
+        <a
+            href="{% url 'cart' %}"
+            class="nav-button"
+        >
+            ← Cart
+        </a>
+
+        <a
+            href="{% url 'home' %}"
+            class="nav-button"
+        >
+            Marketplace
+        </a>
+
+    </div>
+
+
+</div>
+
+</body>
+</html>
+

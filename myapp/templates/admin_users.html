@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Users</h1>
+
+{% for user in users %}
+
+<p>{{ user.username }}</p>
+
+    <a href="{% url 'admin_user_detail' user.pk %}"> View Profile</a> <br> <br>
+    <form method="post"
+      action="{% url 'admin_user_delete' user.pk %}"
+      style="display:inline;">
+
+    {% csrf_token %}
+
+    <button type="submit">Delete</button>
+
+</form>
+
+{% endfor %}
+</body>
+</html>

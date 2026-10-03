@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Marketplace</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f6f7f9;
+            color: #222;
+        }
+
+        /* HEADER */
+
+        header {
+            background: #ffffff;
+            border-bottom: 1px solid #e8e8e8;
+            padding: 18px 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        .logo {
+            text-decoration: none;
+            color: #111;
+            font-size: 24px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .search {
+            flex: 1;
+            max-width: 650px;
+        }
+
+        .search form {
+            display: flex;
+            background: #f2f3f5;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .search input {
+            width: 100%;
+            border: none;
+            outline: none;
+            background: transparent;
+            padding: 14px 17px;
+            font-size: 14px;
+        }
+
+        .search select {
+            border: none;
+            outline: none;
+            background: transparent;
+            padding: 0 12px;
+            color: #555;
+        }
+
+        .search button {
+            border: none;
+            background: #222;
+            color: white;
+            padding: 0 22px;
+            cursor: pointer;
+        }
+
+        .search button:hover {
+            background: #444;
+        }
+
+        .header-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-links a {
+            text-decoration: none;
+            color: #444;
+            font-size: 14px;
+            padding: 9px 12px;
+            border-radius: 9px;
+        }
+
+        .header-links a:hover {
+            background: #f1f2f4;
+        }
+
+
+        /* MAIN */
+
+        main {
+            max-width: 1250px;
+            margin: auto;
+            padding: 40px 25px 70px;
+        }
+
+
+        /* HERO */
+
+        .hero {
+            background: white;
+            border: 1px solid #e8e8e8;
+            border-radius: 22px;
+            padding: 50px;
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-size: 40px;
+            margin-bottom: 12px;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            color: #777;
+            font-size: 16px;
+        }
+
+
+        /* SECTION */
+
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+
+        /* CATEGORIES */
+
+        .categories {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 45px;
+        }
+
+        .category {
+            text-decoration: none;
+            color: #333;
+            background: white;
+            border: 1px solid #e4e4e4;
+            padding: 12px 19px;
+            border-radius: 12px;
+            transition: 0.2s;
+        }
+
+        .category:hover {
+            background: #222;
+            color: white;
+            border-color: #222;
+            transform: translateY(-2px);
+        }
+
+
+        /* PRODUCTS GRID */
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 22px;
+        }
+
+
+        /* PRODUCT CARD */
+
+        .product-card {
+            background: white;
+            border: 1px solid #e6e6e6;
+            border-radius: 17px;
+            overflow: hidden;
+            transition: 0.25s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+        }
+
+
+        /* IMAGE */
+
+        .product-image {
+            width: 100%;
+            height: 230px;
+            background: #f1f2f4;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.03);
+        }
+
+        .no-image {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 14px;
+        }
+
+
+        /* PRODUCT INFO */
+
+        .product-info {
+            padding: 18px;
+        }
+
+        .product-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 7px;
+        }
+
+        .product-category {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 12px;
+        }
+
+        .description {
+            color: #777;
+            font-size: 14px;
+            line-height: 1.5;
+
+            height: 42px;
+            overflow: hidden;
+
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+
+        /* BUTTONS */
+
+        .product-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .open-button {
+            flex: 1;
+            text-align: center;
+            text-decoration: none;
+            background: #222;
+            color: white;
+            padding: 11px;
+            border-radius: 9px;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .open-button:hover {
+            background: #444;
+        }
+
+
+        /* EMPTY */
+
+        .empty {
+            background: white;
+            border: 1px solid #e6e6e6;
+            border-radius: 16px;
+            padding: 50px;
+            text-align: center;
+            color: #888;
+        }
+
+
+        /* FOOTER */
+
+        footer {
+            background: white;
+            border-top: 1px solid #e5e5e5;
+            padding: 25px;
+            text-align: center;
+            color: #888;
+            font-size: 14px;
+        }
+
+
+        /* TABLET */
+
+        @media (max-width: 1050px) {
+
+            .products {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            header {
+                padding: 18px 25px;
+            }
+
+        }
+
+
+        /* MOBILE */
+
+        @media (max-width: 750px) {
+
+            header {
+                flex-wrap: wrap;
+            }
+
+            .search {
+                order: 3;
+                width: 100%;
+                max-width: none;
+            }
+
+            .products {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero {
+                padding: 35px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+        }
+
+
+        @media (max-width: 500px) {
+
+            main {
+                padding: 25px 15px 50px;
+            }
+
+            .products {
+                grid-template-columns: 1fr;
+            }
+
+            .header-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 28px;
+            }
+
+            .hero h1 {
+                font-size: 28px;
+            }
+
+            .search form {
+                flex-wrap: wrap;
+            }
+
+            .search select {
+                padding: 10px;
+            }
+
+            .search button {
+                padding: 12px 20px;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<header>
+
+    <a href="{% url 'home' %}" class="logo">
+        Marketplace
+    </a>
+
+
+    <!-- SEARCH -->
+
+    <div class="search">
+
+        <form method="get">
+
+            <input
+                type="text"
+                name="search"
+                placeholder="Search product..."
+                value="{{ request.GET.search|default:'' }}"
+            >
+
+
+            <select name="category">
+
+                <option value="">
+                    All categories
+                </option>
+
+                {% for category in categories %}
+
+                    <option
+                        value="{{ category.pk }}"
+                        {% if request.GET.category == category.pk|stringformat:"s" %}
+                            selected
+                        {% endif %}
+                    >
+                        {{ category.title }}
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+
+            <button type="submit">
+                Search
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- USER LINKS -->
+
+    <div class="header-links">
+
+        {% if request.user.is_authenticated %}
+
+            <a href="{% url 'cart' %}">
+                Cart
+            </a>
+
+            <a href="{% url 'my_favorites' %}">
+                Favorites
+            </a>
+
+            <a href="{% url 'my_products' %}">
+                My Products
+            </a>
+
+        {% else %}
+
+            <a href="{% url 'login' %}">
+                Login
+            </a>
+
+            <a href="{% url 'register' %}">
+                Register
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</header>
+
+
+
+<main>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <h1>
+            Find what you need.
+        </h1>
+
+        <p>
+            Discover products from different sellers in one marketplace.
+        </p>
+
+    </section>
+
+
+
+    <!-- CATEGORIES -->
+
+    <section>
+
+        <h2 class="section-title">
+            Categories
+        </h2>
+
+
+        <div class="categories">
+
+            {% for category in categories %}
+
+                <a
+                    href="{% url 'category_products' category.pk %}"
+                    class="category"
+                >
+                    {{ category.title }}
+                </a>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+
+
+    <!-- PRODUCTS -->
+
+    <section>
+
+        <h2 class="section-title">
+            Products
+        </h2>
+
+
+        {% if products %}
+
+            <div class="products">
+
+                {% for product in products %}
+
+                    <div class="product-card">
+
+
+                        <!-- PRODUCT IMAGE -->
+
+                        <div class="product-image">
+
+                            {% for image in product.images.all %}
+
+                                {% if forloop.first %}
+
+                                    <img
+                                        src="{{ image.image.url }}"
+                                        alt="{{ product.name }}"
+                                    >
+
+                                {% endif %}
+
+                            {% empty %}
+
+                                <div class="no-image">
+                                    No image
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+
+
+                        <!-- PRODUCT INFO -->
+
+                        <div class="product-info">
+
+                            <div class="product-name">
+                                {{ product.name }}
+                            </div>
+
+
+                            <div class="product-category">
+                                {{ product.category }}
+                            </div>
+
+
+                            <div class="description">
+                                {{ product.description }}
+                            </div>
+
+
+                            <div class="price">
+                                ${{ product.price }}
+                            </div>
+
+
+                            <div class="product-actions">
+
+                                <a
+                                    href="{% url 'product' product.pk %}"
+                                    class="open-button"
+                                >
+                                    View Product
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+        {% else %}
+
+            <div class="empty">
+
+                <p>
+                    Товаров пока нет.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </section>
+
+
+</main>
+
+
+
+<footer>
+
+    Marketplace © 2026
+
+</footer>
+
+
+</body>
+</html>

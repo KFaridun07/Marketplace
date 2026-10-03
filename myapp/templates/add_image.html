@@ -1,0 +1,190 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add Image</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f6f7f9;
+            color: #222;
+        }
+
+        .container {
+            max-width: 550px;
+            margin: 60px auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e6e6e6;
+            border-radius: 20px;
+            padding: 35px;
+
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+        }
+
+        h1 {
+            text-align: center;
+            margin: 0 0 8px;
+            font-size: 30px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        form p {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        input,
+        select {
+            width: 100%;
+
+            padding: 12px 13px;
+
+            border: 1px solid #ddd;
+            border-radius: 10px;
+
+            background: #fafafa;
+
+            font-family: inherit;
+            font-size: 14px;
+
+            outline: none;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #aaa;
+            background: white;
+        }
+
+        input[type="file"] {
+            padding: 10px;
+            background: white;
+            cursor: pointer;
+        }
+
+        .save-button {
+            width: 100%;
+
+            padding: 13px;
+
+            border: none;
+            border-radius: 10px;
+
+            background: #222;
+            color: white;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        .save-button:hover {
+            background: #444;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: center;
+
+            margin-top: 18px;
+        }
+
+        .back-button {
+            padding: 11px 20px;
+
+            background: white;
+            color: #333;
+
+            border: 1px solid #ddd;
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            font-size: 13px;
+        }
+
+        .back-button:hover {
+            background: #f0f0f0;
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>
+            Add Image
+        </h1>
+
+        <div class="subtitle">
+            Add a photo to your product
+        </div>
+
+
+        <form method="post" enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button
+                type="submit"
+                class="save-button"
+            >
+                Save Image
+            </button>
+
+        </form>
+
+
+        <div class="navigation">
+
+            <a
+                href="{% url 'products' %}"
+                class="back-button"
+            >
+                ← Back to Products
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,187 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Product</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f6f7f9;
+            color: #222;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 60px auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e6e6e6;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+        }
+
+        h1 {
+            text-align: center;
+            margin: 0 0 8px;
+            font-size: 30px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        form p {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+
+            padding: 12px 13px;
+
+            border: 1px solid #ddd;
+            border-radius: 10px;
+
+            background: #fafafa;
+
+            font-family: inherit;
+            font-size: 14px;
+
+            outline: none;
+        }
+
+        textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #aaa;
+            background: white;
+        }
+
+        .save-button {
+            width: 100%;
+
+            padding: 13px;
+
+            border: none;
+            border-radius: 10px;
+
+            background: #222;
+            color: white;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            cursor: pointer;
+
+            margin-top: 5px;
+        }
+
+        .save-button:hover {
+            background: #444;
+        }
+
+        .cancel-button {
+            display: block;
+
+            width: 100%;
+
+            padding: 12px;
+
+            margin-top: 12px;
+
+            background: white;
+            color: #333;
+
+            border: 1px solid #ddd;
+            border-radius: 10px;
+
+            text-align: center;
+            text-decoration: none;
+
+            font-size: 14px;
+        }
+
+        .cancel-button:hover {
+            background: #f2f2f2;
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>
+            Edit Product
+        </h1>
+
+        <div class="subtitle">
+            Update your product information
+        </div>
+
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button
+                type="submit"
+                class="save-button"
+            >
+                Save Changes
+            </button>
+
+        </form>
+
+
+        <a
+            href="{% url 'product' object.pk %}"
+            class="cancel-button"
+        >
+            Cancel
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>
