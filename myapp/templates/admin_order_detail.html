@@ -1,28 +1,261 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Order Detail</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f8fc;
+            color: #2d3142;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .header-card {
+            background: white;
+            padding: 30px;
+            border-radius: 24px;
+            box-shadow: 0 10px 35px rgba(30, 35, 50, 0.07);
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            margin: 0 0 25px;
+            font-size: 32px;
+        }
+
+        .order-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .info-box {
+            background: #f7f8fc;
+            padding: 16px;
+            border-radius: 14px;
+        }
+
+        .info-title {
+            display: block;
+            font-size: 13px;
+            color: #8a8f9d;
+            margin-bottom: 6px;
+        }
+
+        .info-value {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .products-card {
+            background: white;
+            padding: 30px;
+            border-radius: 24px;
+            box-shadow: 0 10px 35px rgba(30, 35, 50, 0.07);
+        }
+
+        h2 {
+            margin: 0 0 20px;
+            font-size: 24px;
+        }
+
+        .product-item {
+            padding: 20px;
+            border: 1px solid #eceef3;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            transition: 0.2s;
+        }
+
+        .product-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .product-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(30, 35, 50, 0.06);
+        }
+
+        .product-name {
+            font-size: 17px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .product-info {
+            color: #686d7b;
+            margin: 6px 0;
+        }
+
+        .product-info strong {
+            color: #2d3142;
+        }
+
+        .navigation {
+            margin-top: 25px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .navigation a {
+            display: inline-block;
+            padding: 11px 18px;
+            border-radius: 12px;
+            background: white;
+            color: #2d3142;
+            border: 1px solid #e5e7ed;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .navigation a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(30, 35, 50, 0.06);
+        }
+
+        .empty {
+            color: #8a8f9d;
+            text-align: center;
+            padding: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 25px auto;
+            }
+
+            .header-card,
+            .products-card {
+                padding: 22px;
+            }
+
+            h1 {
+                font-size: 27px;
+            }
+
+            .order-info {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Order Detail</h1>
 
-<p>Order ID: {{ order.pk }}</p>
-<p>Owner: {{ order.owner.username }}</p>
-<p>Total price: {{ order.total_price }}</p>
-<p>Date: {{ order.cr_at }}</p>
+<div class="container">
 
-<h2>Products</h2>
+    <div class="header-card">
 
-{% for item in order_items %}
+        <h1>Order #{{ order.pk }}</h1>
 
-<p>
-    Product: {{ item.product.name }}
-    | Quantity: {{ item.quantity }}
-    | Price: {{ item.price }}
-</p>
+        <div class="order-info">
 
-{% endfor %}
+            <div class="info-box">
+                <span class="info-title">Owner</span>
+                <span class="info-value">
+                    {{ order.owner.username }}
+                </span>
+            </div>
+
+            <div class="info-box">
+                <span class="info-title">Total Price</span>
+                <span class="info-value">
+                    {{ order.total_price }}
+                </span>
+            </div>
+
+            <div class="info-box">
+                <span class="info-title">Order Date</span>
+                <span class="info-value">
+                    {{ order.cr_at }}
+                </span>
+            </div>
+
+            <div class="info-box">
+                <span class="info-title">Order ID</span>
+                <span class="info-value">
+                    #{{ order.pk }}
+                </span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="products-card">
+
+        <h2>Products</h2>
+
+        {% if order_items %}
+
+            {% for item in order_items %}
+
+                <div class="product-item">
+
+                    <div class="product-name">
+                        {{ item.product.name }}
+                    </div>
+
+                    <p class="product-info">
+                        <strong>Quantity:</strong>
+                        {{ item.quantity }}
+                    </p>
+
+                    <p class="product-info">
+                        <strong>Price:</strong>
+                        {{ item.price }}
+                    </p>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty">
+                No products in this order.
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <div class="navigation">
+
+        <a href="{% url 'admin_orders' %}">
+            ← Orders
+        </a>
+
+        <a href="{% url 'admin_dashboard' %}">
+            Dashboard
+        </a>
+
+        <a href="{% url 'home' %}">
+            Marketplace
+        </a>
+
+    </div>
+
+</div>
+
 </body>
 </html>

@@ -1,16 +1,179 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Create Category</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f8fc;
+            color: #2d3142;
+        }
+
+        .container {
+            max-width: 550px;
+            margin: 70px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 35px;
+            border-radius: 24px;
+            box-shadow: 0 10px 35px rgba(30, 35, 50, 0.08);
+        }
+
+        h1 {
+            margin: 0 0 10px;
+            font-size: 30px;
+        }
+
+        .subtitle {
+            margin: 0 0 30px;
+            color: #8a8f9d;
+        }
+
+        form p {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #e2e4ea;
+            border-radius: 12px;
+            outline: none;
+            font-size: 15px;
+            background: #fafbfc;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #b9bdc9;
+            background: white;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 12px;
+            background: #2d3142;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            opacity: 0.92;
+        }
+
+        .navigation {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .navigation a {
+            display: inline-block;
+            padding: 11px 18px;
+            border-radius: 12px;
+            background: white;
+            color: #2d3142;
+            border: 1px solid #e5e7ed;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .navigation a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(30, 35, 50, 0.06);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 30px auto;
+            }
+
+            .card {
+                padding: 25px 20px;
+            }
+
+            h1 {
+                font-size: 27px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Create Category</h1>
-    <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save</button>
-    </form>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>Create Category</h1>
+
+        <p class="subtitle">
+            Add a new category to your marketplace.
+        </p>
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button type="submit" class="submit-button">
+                Save Category
+            </button>
+
+        </form>
+
+    </div>
+
+    <div class="navigation">
+
+        <a href="{% url 'cats' %}">
+            ← Categories
+        </a>
+
+        <a href="{% url 'admin_dashboard' %}">
+            Dashboard
+        </a>
+
+        <a href="{% url 'home' %}">
+            Marketplace
+        </a>
+
+    </div>
+
+</div>
+
 </body>
 </html>
+

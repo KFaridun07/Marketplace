@@ -1,29 +1,206 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Admin Products</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f8fc;
+            color: #2d3142;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 24px;
+            box-shadow: 0 10px 35px rgba(30, 35, 50, 0.07);
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        .subtitle {
+            margin: 10px 0 0;
+            color: #8a8f9d;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 8px 30px rgba(30, 35, 50, 0.07);
+            transition: 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 35px rgba(30, 35, 50, 0.10);
+        }
+
+        .product-name {
+            font-size: 19px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            word-break: break-word;
+        }
+
+        .delete-button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            background: #fff1f1;
+            color: #c94b4b;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .delete-button:hover {
+            background: #ffe2e2;
+            transform: translateY(-2px);
+        }
+
+        .navigation {
+            margin-top: 25px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .navigation a {
+            display: inline-block;
+            padding: 11px 18px;
+            border-radius: 12px;
+            background: white;
+            color: #2d3142;
+            border: 1px solid #e5e7ed;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .navigation a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(30, 35, 50, 0.06);
+        }
+
+        .empty {
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            text-align: center;
+            color: #8a8f9d;
+            box-shadow: 0 8px 30px rgba(30, 35, 50, 0.06);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 25px auto;
+            }
+
+            .header {
+                padding: 24px;
+            }
+
+            h1 {
+                font-size: 27px;
+            }
+
+            .products {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
+
 <body>
-   <h1>Admin Products</h1>
 
-{% for product in products %}
+<div class="container">
 
-<p>
-    {{ product.name }}
-</p>
+    <div class="header">
+        <h1>Admin Products</h1>
+        <p class="subtitle">
+            Manage all products in the marketplace.
+        </p>
+    </div>
 
-    <form method="post"
-          action="{% url 'admin_product_delete' product.pk %}"
-          style="display:inline;">
+    {% if products %}
 
-        {% csrf_token %}
+        <div class="products">
 
-        <button type="submit">Delete</button>
+            {% for product in products %}
 
-    </form>
+                <div class="product-card">
 
-{% endfor %} 
+                    <div class="product-name">
+                        {{ product.name }}
+                    </div>
+
+                    <form method="post"
+                          action="{% url 'admin_product_delete' product.pk %}">
+
+                        {% csrf_token %}
+
+                        <button type="submit" class="delete-button">
+                            Delete Product
+                        </button>
+
+                    </form>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty">
+            There are no products yet.
+        </div>
+
+    {% endif %}
+
+    <div class="navigation">
+
+        <a href="{% url 'admin_dashboard' %}">
+            ← Dashboard
+        </a>
+
+        <a href="{% url 'home' %}">
+            Marketplace
+        </a>
+
+    </div>
+
+</div>
+
 </body>
 </html>
