@@ -1,34 +1,269 @@
+```html id="m9q2xk"
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Admin Categories</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f8fc;
+            color: #2d3142;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        .add-button {
+            display: inline-block;
+            padding: 12px 18px;
+            border-radius: 12px;
+            background: #2d3142;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .add-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .categories {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 18px;
+            padding: 20px 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            box-shadow: 0 7px 25px rgba(30, 35, 50, 0.06);
+        }
+
+        .category-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: #f0f1f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 21px;
+        }
+
+        .category-title {
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        .actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .edit-button {
+            padding: 10px 16px;
+            background: #f0f1f5;
+            color: #2d3142;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .delete-button {
+            padding: 10px 16px;
+            background: #fff1f1;
+            color: #c85c5c;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .edit-button:hover,
+        .delete-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .empty {
+            background: white;
+            border-radius: 18px;
+            padding: 45px 20px;
+            text-align: center;
+            color: #8a8f9d;
+            box-shadow: 0 7px 25px rgba(30, 35, 50, 0.06);
+        }
+
+        .navigation {
+            margin-top: 30px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .navigation a {
+            display: inline-block;
+            padding: 12px 20px;
+            border-radius: 12px;
+            background: white;
+            color: #2d3142;
+            border: 1px solid #e5e7ed;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .navigation a:hover {
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 600px) {
+            .header {
+                display: block;
+            }
+
+            .add-button {
+                margin-top: 18px;
+            }
+
+            .category-card {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .actions {
+                width: 100%;
+            }
+
+            .edit-button,
+            .delete-button {
+                flex: 1;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Admin Categories</h1>
-{% for category in categories %}
 
-<p>
-    {{ category.title }}
+<div class="container">
 
-    <a href="{% url 'admin_category_edit' category.pk %}">
-        Edit
-    </a>
+    <div class="header">
 
-    <form method="post"
-          action="{% url 'admin_category_delete' category.pk %}"
-          style="display:inline;">
+        <div>
+            <h1>Admin Categories</h1>
+        </div>
 
-        {% csrf_token %}
+        <a href="{% url 'admin_category_create' %}" class="add-button">
+            + Add Category
+        </a>
 
-        <button type="submit">Delete</button>
+    </div>
 
-    </form>
-</p>
+    <div class="categories">
 
-{% endfor %}
+        {% for category in categories %}
 
-<a href="{% url 'admin_category_create' %}">Add Category</a>
+            <div class="category-card">
+
+                <div class="category-info">
+
+                    <div class="icon">
+                        📁
+                    </div>
+
+                    <div class="category-title">
+                        {{ category.title }}
+                    </div>
+
+                </div>
+
+                <div class="actions">
+
+                    <a href="{% url 'admin_category_edit' category.pk %}"
+                       class="edit-button">
+                        Edit
+                    </a>
+
+                    <form method="post"
+                          action="{% url 'admin_category_delete' category.pk %}">
+
+                        {% csrf_token %}
+
+                        <button type="submit" class="delete-button">
+                            Delete
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        {% empty %}
+
+            <div class="empty">
+                No categories found.
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+    <div class="navigation">
+
+        <a href="{% url 'admin_dashboard' %}">
+            ← Dashboard
+        </a>
+
+        <a href="{% url 'home' %}">
+            Marketplace
+        </a>
+
+    </div>
+
+</div>
+
 </body>
 </html>
+```

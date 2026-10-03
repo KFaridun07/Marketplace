@@ -1,56 +1,321 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>My Favorites</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f8fc;
+            color: #2d3142;
+        }
+
+        .container {
+            max-width: 1150px;
+            margin: 0 auto;
+            padding: 45px 20px;
+        }
+
+        .header {
+            margin-bottom: 35px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        .header p {
+            margin-top: 8px;
+            color: #8a8f9d;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(30, 35, 50, 0.07);
+            transition: 0.25s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 14px 35px rgba(30, 35, 50, 0.11);
+        }
+
+        .image-wrapper {
+            width: 100%;
+            height: 220px;
+            background: #f0f1f5;
+            overflow: hidden;
+        }
+
+        .image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .no-image {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #9a9eaa;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-name {
+            margin: 0 0 10px;
+            font-size: 21px;
+        }
+
+        .description {
+            color: #777d8b;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 19px;
+            font-weight: bold;
+            margin-bottom: 18px;
+        }
+
+        .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+
+        .open-button,
+        .cart-button,
+        .remove-button {
+            width: 100%;
+            padding: 11px;
+            border-radius: 11px;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .open-button {
+            display: block;
+            background: #f0f1f5;
+            color: #2d3142;
+            text-decoration: none;
+        }
+
+        .cart-button {
+            background: #2d3142;
+            color: white;
+            border: none;
+        }
+
+        .remove-button {
+            background: #fff1f1;
+            color: #c85c5c;
+            border: none;
+        }
+
+        .open-button:hover,
+        .cart-button:hover,
+        .remove-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .empty {
+            background: white;
+            border-radius: 20px;
+            padding: 55px 20px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(30, 35, 50, 0.06);
+        }
+
+        .empty h2 {
+            margin-bottom: 10px;
+        }
+
+        .empty p {
+            color: #8a8f9d;
+        }
+
+        .navigation {
+            margin-top: 35px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .navigation a {
+            display: inline-block;
+            padding: 12px 20px;
+            background: white;
+            color: #2d3142;
+            border: 1px solid #e5e7ed;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .navigation a:hover {
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 27px;
+            }
+
+            .products {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
+
 <body>
-   <h1>My Favorites</h1>
 
-{% for product in products %}
+<div class="container">
 
-<h2>{{ product.name }}</h2>
+    <div class="header">
+        <h1>My Favorites</h1>
+        <p>Products you saved for later.</p>
+    </div>
 
-<p>{{ product.description }}</p>
+    {% if products %}
 
-<p>Price: {{ product.price }}</p>
+        <div class="products">
 
-<form method="post" action="{% url 'favorite_remove' product.pk %}">
-    {% csrf_token %}
-    <button type="submit">Remove from Favorites</button>
-</form>
+            {% for product in products %}
 
-{% for image in product.images.all %}
-    <img src="{{ image.image.url }}" width="200">
-{% endfor %}
+                <div class="product-card">
 
-<br>
+                    <div class="image-wrapper">
 
-<a href="{% url 'product' product.pk %}">
-    Open product
-</a>
+                        {% if product.images.all %}
 
-{% if product.owner != request.user %}
-    <form method="post" action="{% url 'add_cart' product.pk %}">
-        {% csrf_token %}
-        <button type="submit">Add to Cart</button>
-    </form>
-{% endif %}
+                            {% for image in product.images.all %}
 
-<hr>
+                                {% if forloop.first %}
+                                    <img src="{{ image.image.url }}" alt="{{ product.name }}">
+                                {% endif %}
 
-{% empty %}
+                            {% endfor %}
 
-<p>You don't have any favorite products yet.</p>
+                        {% else %}
 
-{% endfor %}
+                            <div class="no-image">
+                                No image
+                            </div>
 
-<br>
+                        {% endif %}
 
-<a href="{% url 'myprofile' request.user.profile.pk %}">
-    <button type="button">Back to Profile</button>
-</a>
+                    </div>
+
+                    <div class="product-info">
+
+                        <h2 class="product-name">
+                            {{ product.name }}
+                        </h2>
+
+                        <div class="description">
+                            {{ product.description }}
+                        </div>
+
+                        <div class="price">
+                            {{ product.price }}
+                        </div>
+
+                        <div class="actions">
+
+                            <a href="{% url 'product' product.pk %}" class="open-button">
+                                Open Product
+                            </a>
+
+                            {% if product.owner != request.user %}
+
+                                <form method="post" action="{% url 'add_cart' product.pk %}">
+                                    {% csrf_token %}
+
+                                    <button type="submit" class="cart-button">
+                                        Add to Cart
+                                    </button>
+                                </form>
+
+                            {% endif %}
+
+                            <form method="post" action="{% url 'favorite_remove' product.pk %}">
+                                {% csrf_token %}
+
+                                <button type="submit" class="remove-button">
+                                    Remove from Favorites
+                                </button>
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty">
+            <h2>No favorite products yet</h2>
+            <p>Products you add to favorites will appear here.</p>
+        </div>
+
+    {% endif %}
+
+    <div class="navigation">
+
+        <a href="{% url 'home' %}">
+            ← Marketplace
+        </a>
+
+        <a href="{% url 'my_products' %}">
+            My Products
+        </a>
+
+        <a href="{% url 'orders' %}">
+            My Orders
+        </a>
+
+        <a href="{% url 'myprofile' request.user.profile.pk %}">
+            My Profile
+        </a>
+
+    </div>
+
+</div>
 
 </body>
 </html>
+```

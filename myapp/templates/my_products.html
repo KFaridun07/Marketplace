@@ -1,37 +1,266 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>My Products</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f8fc;
+            color: #2d3142;
+        }
+
+        .container {
+            max-width: 1150px;
+            margin: 0 auto;
+            padding: 45px 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+            gap: 20px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        .header p {
+            margin: 8px 0 0;
+            color: #8a8f9d;
+        }
+
+        .add-button,
+        .back-button {
+            display: inline-block;
+            padding: 12px 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .add-button {
+            background: #2d3142;
+            color: white;
+        }
+
+        .back-button {
+            background: white;
+            color: #2d3142;
+            border: 1px solid #e5e7ed;
+        }
+
+        .add-button:hover,
+        .back-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(30, 35, 50, 0.07);
+            transition: 0.25s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 14px 35px rgba(30, 35, 50, 0.11);
+        }
+
+        .image-wrapper {
+            width: 100%;
+            height: 220px;
+            background: #f0f1f5;
+            overflow: hidden;
+        }
+
+        .image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .no-image {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9a9eaa;
+            font-size: 14px;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-name {
+            margin: 0 0 10px;
+            font-size: 20px;
+        }
+
+        .price {
+            margin: 0 0 18px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .open-button {
+            display: block;
+            text-align: center;
+            padding: 11px;
+            border-radius: 11px;
+            background: #f0f1f5;
+            color: #2d3142;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .open-button:hover {
+            background: #e5e7ed;
+        }
+
+        .empty {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 20px;
+            text-align: center;
+            color: #8a8f9d;
+            box-shadow: 0 8px 30px rgba(30, 35, 50, 0.06);
+        }
+
+        .bottom-navigation {
+            margin-top: 35px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 650px) {
+            .header {
+                display: block;
+            }
+
+            .add-button {
+                margin-top: 20px;
+            }
+
+            .header h1 {
+                font-size: 27px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <h1>My Products</h1>
 
-{% for product in products %}
+<div class="container">
 
-    <h2>{{ product.name }}</h2>
+    <div class="header">
+        <div>
+            <h1>My Products</h1>
+            <p>Manage the products you have added to the marketplace.</p>
+        </div>
 
-    <p>Price: {{ product.price }}</p>
+        <a href="{% url 'cr_prod' %}" class="add-button">
+            + Add Product
+        </a>
+    </div>
 
-    {% for image in product.images.all %}
-        <img src="{{ image.image.url }}" width="200">
-    {% endfor %}
+    {% if products %}
 
-    <br>
+        <div class="products">
 
-    <a href="{% url 'product' product.pk %}">
-        Open product
-    </a>
+            {% for product in products %}
 
-    <hr>
+                <div class="product-card">
 
-{% empty %}
+                    <div class="image-wrapper">
 
-    <p>You don't have any products yet.</p>
+                        {% if product.images.all %}
+                            {% for image in product.images.all %}
+                                {% if forloop.first %}
+                                    <img src="{{ image.image.url }}" alt="{{ product.name }}">
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            <div class="no-image">
+                                No image
+                            </div>
+                        {% endif %}
 
-{% endfor %}
+                    </div>
 
-<a href="{% url 'cr_prod' %}"><button>Add products</button></a>
+                    <div class="product-info">
+
+                        <h2 class="product-name">
+                            {{ product.name }}
+                        </h2>
+
+                        <p class="price">
+                            {{ product.price }}
+                        </p>
+
+                        <a href="{% url 'product' product.pk %}" class="open-button">
+                            Open Product
+                        </a>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty">
+            <h2>You don't have any products yet.</h2>
+            <p>Add your first product to the marketplace.</p>
+        </div>
+
+    {% endif %}
+
+    <div class="bottom-navigation">
+
+        <a href="{% url 'home' %}" class="back-button">
+            ← Marketplace
+        </a>
+
+        <a href="{% url 'my_favorites' %}" class="back-button">
+            My Favorites
+        </a>
+
+        <a href="{% url 'orders' %}" class="back-button">
+            My Orders
+        </a>
+
+    </div>
+
+</div>
+
 </body>
 </html>
+```

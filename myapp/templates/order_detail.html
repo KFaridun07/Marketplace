@@ -1,33 +1,209 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Order #{{ order.pk }}</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f8fc;
+            color: #2d3142;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .title {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        .date {
+            color: #8a8f9d;
+            font-size: 14px;
+        }
+
+        .order-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 30px rgba(30, 35, 50, 0.07);
+        }
+
+        .section-title {
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+
+        .product {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #eeeeF2;
+        }
+
+        .product:last-child {
+            border-bottom: none;
+        }
+
+        .product-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        .quantity {
+            color: #8a8f9d;
+            font-size: 14px;
+        }
+
+        .price {
+            font-weight: bold;
+            font-size: 17px;
+        }
+
+        .total {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #eeeeF2;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .total-label {
+            font-size: 18px;
+            color: #6f7480;
+        }
+
+        .total-price {
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 12px 22px;
+            background: #2d3142;
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: 0.2s;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        @media (max-width: 600px) {
+            .top {
+                display: block;
+            }
+
+            .date {
+                display: block;
+                margin-top: 8px;
+            }
+
+            .product {
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .price {
+                white-space: nowrap;
+            }
+
+            .title {
+                font-size: 26px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-<h1>Order #{{ order.pk }}</h1>
 
-<h2>Products:</h2>
+<div class="container">
 
-{% for item in order.orderitem_set.all %}
+    <div class="top">
+        <h1 class="title">Order #{{ order.pk }}</h1>
 
-    <p>
-        Product: {{ item.product.name }}
-    </p>
+        <div class="date">
+            {{ order.cr_at }}
+        </div>
+    </div>
 
-    <p>
-        Quantity: {{ item.quantity }}
-    </p>
+    <div class="order-card">
 
-    <hr>
+        <h2 class="section-title">Products</h2>
 
-{% endfor %}
-<h2>Total: {{ order.total_price }}</h2>
+        {% for item in order.orderitem_set.all %}
 
-<a href="{% url 'orders' %}">
-    My Orders
-</a>
+            <div class="product">
+
+                <div>
+                    <div class="product-name">
+                        {{ item.product.name }}
+                    </div>
+
+                    <div class="quantity">
+                        Quantity: {{ item.quantity }}
+                    </div>
+                </div>
+
+                <div class="price">
+                    {{ item.price }}
+                </div>
+
+            </div>
+
+        {% empty %}
+
+            <p>No products in this order.</p>
+
+        {% endfor %}
+
+        <div class="total">
+            <div class="total-label">
+                Total
+            </div>
+
+            <div class="total-price">
+                {{ order.total_price }}
+            </div>
+        </div>
+
+    </div>
+
+    <a href="{% url 'orders' %}" class="back-button">
+        ← My Orders
+    </a>
+
+</div>
 
 </body>
 </html>
+```
